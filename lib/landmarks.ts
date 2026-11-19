@@ -2,6 +2,9 @@
 // (index.html). Verify any of these visually if you swap in a different
 // model or run into odd results on new photos.
 
+import { Landmark } from "./faceShape";
+export * from "./faceShape";
+
 export const PHI = 1.618;
 
 export const POINTS = {
@@ -18,7 +21,16 @@ export const POINTS = {
   mouthLeft: 61,
   mouthRight: 291,
   noseAlarLeft: 98,
-  noseAlarRight: 327
+  noseAlarRight: 327,
+  // Anthropometric points for face shape classification
+  foreheadLeft: 103,
+  foreheadRight: 332,
+  templeLeft: 54,
+  templeRight: 284,
+  jawLeft: 172,
+  jawRight: 397,
+  chinLeft: 148,
+  chinRight: 377,
 } as const;
 
 export interface RatioConfig {
@@ -61,11 +73,7 @@ export const RATIOS: RatioConfig[] = [
   }
 ];
 
-export interface Landmark {
-  x: number;
-  y: number;
-  z?: number;
-}
+
 
 export function distance(
   landmarks: Landmark[],

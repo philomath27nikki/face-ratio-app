@@ -1,22 +1,47 @@
-import FaceRatioAnalyzer from "@/components/FaceRatioAnalyzer";
+"use client";
+
+import { useState } from "react";
+import FaceRatioAnalyzer, { ActiveTab } from "@/components/FaceRatioAnalyzer";
+import AirbnbHeader from "@/components/AirbnbHeader";
+import AirbnbSearchPill from "@/components/AirbnbSearchPill";
+import AirbnbFooter from "@/components/AirbnbFooter";
 
 export default function Home() {
+  const [currentTab, setCurrentTab] = useState<ActiveTab>("shape");
+  const [uploadTrigger, setUploadTrigger] = useState<number>(0);
+
+  const handleUploadClick = () => {
+    setUploadTrigger((prev) => prev + 1);
+  };
+
   return (
-    <main className="min-h-screen bg-paper text-ink">
-      <div className="mx-auto max-w-6xl px-6 py-16">
-        <header className="mb-12 max-w-2xl">
-          <p className="text-sm tracking-wide text-brass mb-2">phi = 1.618…</p>
-          <h1 className="font-serif text-4xl md:text-5xl leading-tight mb-4">
-            How closely does a face follow the golden ratio?
-          </h1>
-          <p className="text-ink/70 text-base leading-relaxed">
-            Upload a front-facing photo. We measure the distances between
-            your features and compare them against phi — the proportion
-            long associated with balanced, classical form.
-          </p>
-        </header>
-        <FaceRatioAnalyzer />
+    <div className="min-h-screen bg-white text-ink flex flex-col justify-between selection:bg-rausch/20 selection:text-rausch">
+      <div>
+        {/* 1. Airbnb Sticky 80px Navbar */}
+        <AirbnbHeader
+          activeTab={currentTab}
+          onTabChange={(tab) => setCurrentTab(tab)}
+          onUploadClick={handleUploadClick}
+        />
+
+        {/* 2. Signature Airbnb 3-Segment Search Capsule */}
+        <AirbnbSearchPill
+          onSegmentClick={(segment) => setCurrentTab(segment)}
+          onUploadClick={handleUploadClick}
+        />
+
+        {/* 3. Main Workspace Container */}
+        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+          <FaceRatioAnalyzer
+            externalTab={currentTab}
+            onTabChange={(tab) => setCurrentTab(tab)}
+            externalUploadTrigger={uploadTrigger}
+          />
+        </main>
       </div>
-    </main>
+
+      {/* 4. Airbnb Clean Light Footer */}
+      <AirbnbFooter />
+    </div>
   );
 }

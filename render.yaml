@@ -1,0 +1,14 @@
+services:
+  # =============================================================
+  # Unified FaceRatio App (Frontend + Backend in One Service)
+  # =============================================================
+  - type: web
+    name: face-ratio-app
+    runtime: docker
+    region: oregon
+    plan: free
+    dockerfilePath: Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 10000
